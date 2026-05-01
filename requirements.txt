@@ -1,0 +1,6 @@
+streamlit>=1.36
+kiwipiepy>=0.21
+google-generativeai>=0.8
+python-dotenv>=1.0
+pandas>=2.2
+pytest>=8.0
