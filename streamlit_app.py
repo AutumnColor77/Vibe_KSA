@@ -11,6 +11,7 @@
 
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
 import pandas as pd
@@ -36,6 +37,13 @@ _APP_DIR = Path(__file__).resolve().parent
 # 다른 폴더에서 `streamlit run …/streamlit_app.py` 를 실행해도 프로젝트 루트의 `.env` 를 읽도록 함
 load_dotenv(_APP_DIR / ".env")
 load_dotenv()
+# Streamlit Community Cloud: 대시보드 Secrets는 `st.secrets`에만 있고 os.environ에는 안 넣는 경우가 있음
+for _key in ("GEMINI_API_KEY", "GOOGLE_API_KEY"):
+    try:
+        if _key in st.secrets:
+            os.environ.setdefault(_key, str(st.secrets[_key]))
+    except Exception:
+        pass
 st.set_page_config(
     page_title="한국어 통사 자동 분석기",
     layout="wide",
