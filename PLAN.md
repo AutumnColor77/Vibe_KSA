@@ -23,7 +23,7 @@
 
 ```
 f:\통사자동분석기\
-├── app.py                       # Streamlit 진입점 (UI/렌더링)
+├── streamlit_app.py             # Streamlit 진입점 (UI/렌더링)
 ├── analyzer/
 │   ├── __init__.py
 │   ├── models.py                # dataclass: Morph, Eojeol, Clause, Component, Analysis
@@ -112,7 +112,7 @@ Kiwi POS 태그 기반 결정 규칙:
   - `COORD`/`SUBORD`를 가진 경우 → "이어진 문장 (대등/종속)"
   - 둘 다면 두 라벨 결합
 
-## 5. UI 구성 (`app.py`)
+## 5. UI 구성 (`streamlit_app.py`)
 
 Streamlit 위젯으로 단일 페이지를 구성한다.
 
@@ -161,7 +161,7 @@ GEMINI_API_KEY=
 - 가상환경 생성 (`python -m venv .venv`, PowerShell 활성화 명령)
 - `pip install -r requirements.txt`
 - `.env` 작성
-- 실행: `streamlit run app.py`
+- 실행: `streamlit run streamlit_app.py`
 
 ## 8. 검증 (`tests/`)
 
@@ -184,7 +184,7 @@ GEMINI_API_KEY=
 
 수동 검증 절차:
 1. `pytest -q` 통과
-2. `streamlit run app.py` 실행 후 위 12개 예문을 사이드바에서 차례로 선택해 4개 탭 결과 점검
+2. `streamlit run streamlit_app.py` 실행 후 위 12개 예문을 사이드바에서 차례로 선택해 4개 탭 결과 점검
 3. AI 토글을 켠 상태에서 동일 예문 1~2개로 Gemini 응답 표시·실패 메시지 모두 확인 (키 제거 후 비활성 표시 확인)
 
 ## 9. 한계와 보강 정책
@@ -207,6 +207,6 @@ GEMINI_API_KEY=
 - [ ] **pipeline** — `analyzer/pipeline.py`에 `analyze(text)` 통합 함수 작성
 - [ ] **visualizer** — `analyzer/visualizer.py`에서 절 트리 DOT 문자열과 어절 색상 강조 HTML 생성
 - [ ] **llm** — `analyzer/llm_assistant.py`에서 Gemini 호출 래퍼와 키 부재 시 비활성 처리 구현
-- [ ] **ui** — `app.py`에 사이드바·입력·4개 결과 탭(요약/성분/트리/형태소)과 AI 토글을 가진 Streamlit UI 작성
+- [ ] **ui** — `streamlit_app.py`에 사이드바·입력·4개 결과 탭(요약/성분/트리/형태소)과 AI 토글을 가진 Streamlit UI 작성
 - [ ] **tests** — `tests/` 아래에 절 종류별 표준 예문 단위 테스트 작성 후 `pytest` 통과 확인
 - [ ] **manual_qa** — `streamlit run`으로 12개 예문 수동 검증 + Gemini 토글 동작 확인 + `README`의 설치/실행 절차 점검

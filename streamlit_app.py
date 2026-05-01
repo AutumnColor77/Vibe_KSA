@@ -33,7 +33,7 @@ from analyzer.visualizer import (
 
 
 _APP_DIR = Path(__file__).resolve().parent
-# 다른 폴더에서 `streamlit run …/app.py` 를 실행해도 프로젝트 루트의 `.env` 를 읽도록 함
+# 다른 폴더에서 `streamlit run …/streamlit_app.py` 를 실행해도 프로젝트 루트의 `.env` 를 읽도록 함
 load_dotenv(_APP_DIR / ".env")
 load_dotenv()
 st.set_page_config(

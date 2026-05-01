@@ -30,17 +30,17 @@ Gemini 보조 설명을 사용하려면 `.env` 파일을 만들고 키를 채웁
 GEMINI_API_KEY=발급받은_키
 ```
 
-(`.env.example` 을 복사해 프로젝트 루트에 `.env` 로 두고 키를 넣으세요. 앱은 **`app.py`가 있는 폴더의 `.env`** 를 읽습니다. Streamlit 을 다시 시작해야 반영됩니다.)
+(`.env.example` 을 복사해 프로젝트 루트에 `.env` 로 두고 키를 넣으세요. 앱은 **`streamlit_app.py`가 있는 폴더의 `.env`** 를 읽습니다. Streamlit 을 다시 시작해야 반영됩니다.)
 
 ## 실행
 
 Windows에서 `pip install` 후 **`streamlit` 명령을 찾을 수 없다**고 나오면(사용자 `Scripts` 폴더가 PATH에 없을 때 흔함), 아래처럼 **모듈 실행**을 쓰세요.
 
 ```powershell
-python -m streamlit run app.py
+python -m streamlit run streamlit_app.py
 ```
 
-가상환경을 쓰고 `Activate.ps1`까지 했다면, 같은 폴더에서 보통 `streamlit run app.py` 도 동작합니다. 안 되면 항상 `python -m streamlit run app.py` 를 쓰면 됩니다.
+가상환경을 쓰고 `Activate.ps1`까지 했다면, 같은 폴더에서 보통 `streamlit run streamlit_app.py` 도 동작합니다. 안 되면 항상 `python -m streamlit run streamlit_app.py` 를 쓰면 됩니다.
 
 브라우저가 열리면 사이드바에서 예문을 골라 「분석」 버튼을 누르거나, 텍스트박스에 직접 문장을 입력해 보세요.
 
@@ -66,7 +66,8 @@ analyzer/        # 분석 엔진 (형태소 → 절 → 성분 → 문장 종류
   llm_assistant.py
 examples/        # 사이드바 예문
 tests/           # pytest 단위 테스트
-app.py           # Streamlit UI
+streamlit_app.py # Streamlit UI
+main.py          # Vercel용 FastAPI 안내 페이지(API만; Streamlit은 별도 실행)
 ```
 
 ## 한계
@@ -74,3 +75,7 @@ app.py           # Streamlit UI
 - 규칙 기반은 형태소 표지에 의존합니다. 보조사 `은/는`이 주어와 주제를 모두 표시하거나, 같은 형태(`-고`)가 대등/종속/인용 어디로든 쓰일 수 있는 사례에서는 모호함이 남고 `Analysis.notes`에 경고가 기록됩니다.
 - 구어체·신조어·장문 텍스트는 best-effort입니다.
 - AI 보조는 규칙 기반 결과를 검토·부연하는 용도이며, 분석 결과 자체를 LLM이 만들지 않습니다(해석 가능성 우선).
+
+## Vercel 배포
+
+Vercel은 **장시간 띄우는 Streamlit 서버**에는 맞지 않습니다. 이 저장소는 빌드 통과를 위해 `main.py`에 FastAPI ASGI 앱을 두고, Streamlit UI는 로컬 또는 [Streamlit Community Cloud](https://share.streamlit.io/)에서 `streamlit_app.py`로 실행하는 구성입니다.

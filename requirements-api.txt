@@ -1,0 +1,2 @@
+# Vercel serverless용 최소 의존성 (FastAPI ASGI)
+fastapi>=0.115
